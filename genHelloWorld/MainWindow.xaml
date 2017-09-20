@@ -1,0 +1,15 @@
+﻿<Window x:Class="genHelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:genHelloWorld"
+        mc:Ignorable="d"
+        Title="GEN Blockchain" Height="350" Width="525">
+    <Grid>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" Text="Enter address here" VerticalAlignment="Top" Width="120" TextChanged="textBox_TextChanged"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,294.667" TextWrapping="Wrap" Text="Address"/>
+        <Button x:Name="button" Content="Search Address" HorizontalAlignment="Left" Margin="151,26,0,0" VerticalAlignment="Top" Width="104"/>
+
+    </Grid>
+</Window>
