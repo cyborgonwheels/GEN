@@ -10,6 +10,8 @@
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" Text="Enter address here" VerticalAlignment="Top" Width="120" TextChanged="textBox_TextChanged"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,294.667" TextWrapping="Wrap" Text="Address"/>
         <Button x:Name="button" Content="Search Address" HorizontalAlignment="Left" Margin="151,26,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,89,0,0" TextWrapping="Wrap" Text="List of addresses" VerticalAlignment="Top"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="183" Margin="10,110,0,0" VerticalAlignment="Top" Width="194"/>
 
     </Grid>
 </Window>
