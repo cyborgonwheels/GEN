@@ -12,6 +12,7 @@
         <Button x:Name="button" Content="Search Address" HorizontalAlignment="Left" Margin="151,26,0,0" VerticalAlignment="Top" Width="104"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,89,0,0" TextWrapping="Wrap" Text="List of addresses" VerticalAlignment="Top"/>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="183" Margin="10,110,0,0" VerticalAlignment="Top" Width="194"/>
+        <Button x:Name="button1" Content="Sort" HorizontalAlignment="Left" Margin="129,90,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>
