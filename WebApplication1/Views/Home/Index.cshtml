@@ -6,7 +6,11 @@
 
 <h3>Single Address Search</h3>
 
-@Html.TextBox("addressTextBox", "Enter an address", new { @class = "form-control" })
+@using (Html.BeginForm("Index", "", FormMethod.Post))
+{
+    <input type="text" name="adrs" id="adrs" /> //search textbox
+    <input type="submit" value="Search" /> //button
+}    
 
 <li>Total Balance: @ViewData["Final Balance"]</li>
 <li>Total Recieved: @ViewData["Total Recieved"]</li>

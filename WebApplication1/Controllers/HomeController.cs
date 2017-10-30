@@ -10,21 +10,24 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(String adrs)
         {
-            string addressString = "1L1BRq7vyf17rsnYCiw9tebY6nmiNTxQgf"; //TODO: add this as a parameter
+            if (adrs != null)
+            {
+                string addressString = adrs; //address parameter
 
-            var customClient = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
+                var customClient = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
 
-            BlockExplorer blockExplorer = new BlockExplorer();
+                BlockExplorer blockExplorer = new BlockExplorer();
 
-            var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
-            
+                var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
 
-            //TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
-            ViewData["Final Balance"] = address.FinalBalance;
-            ViewData["Total Recieved"] = address.TotalReceived;
-            ViewData["Total Sent"] = address.TotalSent;
+
+                //TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
+                ViewData["Final Balance"] = address.FinalBalance;
+                ViewData["Total Recieved"] = address.TotalReceived;
+                ViewData["Total Sent"] = address.TotalSent;
+            }
 
 
             return View();
