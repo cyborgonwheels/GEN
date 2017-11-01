@@ -7,10 +7,9 @@ using Info.Blockchain.API.Client;
 using Info.Blockchain.API.Models;
 
 // unit test code  
-using System;  
 using Microsoft.VisualStudio.TestTools.UnitTesting;  
 
-namespace BankTests  
+namespace BlockchainAnalysisTool  
 {  
     [TestClass]  
     public class BankAccountTests  
