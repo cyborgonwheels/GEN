@@ -6,14 +6,16 @@ using Info.Blockchain.API.BlockExplorer;
 using Info.Blockchain.API.Client;
 using Info.Blockchain.API.Models;
 // import the name space that we want you toimport the name space that we want to test
-using BlockchainAnalysisTool
+using BlockchainAnalysisTool:
 // unit test code  
 using Microsoft.VisualStudio.TestTools.UnitTesting;  
 
-namespace BlockchainAnalysisTool  
+namespace BlockchainAnalysisToolTest
+    
+
 {  
     [TestClass]  
-    public class BankAccountTests  
+    public class BlockchainAnalysisToolTests  
     {  
         [TestMethod]  
         public void TestMethod1()  
