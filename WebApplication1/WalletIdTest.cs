@@ -7,6 +7,7 @@ using Info.Blockchain.API.Client;
 using Info.Blockchain.API.Models;
 // import the name space that we want to test
 using BlockchainAnalysisTool;
+using walletID;
 // unit test code  
 using Microsoft.VisualStudio.TestTools.UnitTesting;  
 
