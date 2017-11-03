@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Bitcoin Address Search";
 }
 
 <title>@ViewData["Title"] - Search</title>
@@ -12,11 +12,24 @@
     <input type="submit" value="Search" /> //button
 }    
 
-<li>Total Balance: @ViewData["Final Balance"]</li>
+@*<li>Total Balance: @ViewData["Final Balance"]</li>
 <li>Total Recieved: @ViewData["Total Recieved"]</li>
-<li>Total Sent: @ViewData["Total Sent"]</li>
+<li>Total Sent: @ViewData["Total Sent"]</li>*@
+@using BlockchainAnalysisTool
+@{ //Print wallets
+    
+        //var dataList = new List<List<string>>();
+        var walletList = WalletID.getRelatedWallets((string)ViewData["stringAddress"]);
+        foreach (WalletID wallet in walletList)
+        {
+            <li>ANOTHER ONE</li>
+            foreach (string addressString in wallet.getAddressStrings())
+            {
+                <li>@addressString</li>
+            }
 
-@{ // Test for WalletID class and methods 
+        }
+    
 
 }
 <li>Some Data:</li>
@@ -27,5 +40,4 @@
      {
         <li>@word</li>
      }*@
-} 
 
