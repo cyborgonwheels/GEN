@@ -29,4 +29,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="SingleAddressSearch.cs" />
+  </ItemGroup>
+
 </Project>

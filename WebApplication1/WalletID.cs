@@ -11,6 +11,10 @@ namespace BlockchainAnalysisTool
 {
     public class WalletID
     {
+
+
+        public static List<WalletID> MASTER_LIST;
+
         private BlockExplorer blockExplorer { get; }
         protected List<Address> walletAddresses;
         
@@ -39,33 +43,36 @@ namespace BlockchainAnalysisTool
 
             foreach (string add in addressStrings)
             {
-                var singleAddress = blockExplorer.GetBase58AddressAsync(add, filter: FilterType.All).Result;
+                var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
 
                 try
                 {
+                    //Try to find the address in the list
                     walletAddresses.Find(x => x.Base58Check == singleAddress.Base58Check);
                 }
                 catch
                 {
+                    //Add address if we can't find it
                     walletAddresses.Add(singleAddress);
                 }
 
 
             }
         }
-        
 
-        //TODO: return list of Addresses instead of strings?
-        public List<string> getRelatedAddresses(Address address)
+
+        //TODO: Handle duplicates in related addresses (same address from multiple transactions)
+        //TODO: Handle outputs as well as inputs
+        public List<Address> getRelatedAddresses(Address address)
         {
             address.TransactionCount.ToString();
-            List<string> retList = new List<string>();
+            List<Address> retList = new List<Address>();
 
             foreach (Transaction trans in address.Transactions)
             {
                 foreach (Input input in trans.Inputs)
                 {
-                    retList.Add(input.PreviousOutput.Address);
+                    retList.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
                 }
             }
 
@@ -73,7 +80,9 @@ namespace BlockchainAnalysisTool
             return retList;
         }
 
-        public List<string> getRelatedAddresses(string addressString)
+
+        // Overload for getRelatedAddresses that takes a string
+        public List<Address> getRelatedAddresses(string addressString)
         {
             var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
 
