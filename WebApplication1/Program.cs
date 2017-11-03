@@ -22,10 +22,10 @@ namespace WebApplication1
             // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
             
             var singleAddressSearch = new List<WalletID>()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+        
              
             host.Run();
+            singleAddressSearch.Run();
         }
     }
 }
