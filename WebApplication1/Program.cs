@@ -18,7 +18,12 @@ namespace WebApplication1
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
-
+            // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
+            
+            var singleAddressSearch = new List<WalletID>()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+             
             host.Run();
         }
     }
