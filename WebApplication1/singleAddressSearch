@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using walletID;
+
+namespace WebApplication1
+{
+    public class singleAddressSearch
+    {
+        public static void Main(string[] args)
+        {
+
+            // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
+            
+            List<String> singleAddressSearch = new List<WalletID>()
+        
+             
+           
+            singleAddressSearch.Run();
+        }
+    }
+}
