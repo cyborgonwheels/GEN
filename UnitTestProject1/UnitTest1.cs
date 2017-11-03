@@ -8,7 +8,7 @@ namespace BlockchainAnalysisToolTest
     [TestClass]
     public class BlockchainAnalysisToolTests
     {
-        // 
+        // Given 1 address, create 1 wallet
         [TestMethod]
         public void TestMethod1()
         {
