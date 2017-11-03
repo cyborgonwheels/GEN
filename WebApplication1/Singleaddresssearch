@@ -8,9 +8,9 @@ using walletID;
 
 namespace WebApplication1
 {
-    public class singleAddressSearch
+    public class Singleaddresssearch
     {
-        public static void Main(string[] args)
+        public static void Singleaddresssearch()
         {
 
             // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
