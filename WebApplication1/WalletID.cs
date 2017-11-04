@@ -13,10 +13,11 @@ namespace BlockchainAnalysisTool
     {
 
 
-        //public static List<WalletID> MASTER_LIST;
+        public static List<WalletID> MASTER_LIST;
 
         private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
-        protected List<Address> walletAddresses;
+        protected List<Address> walletAddresses { get; }
+        protected List<WalletID> relatedWallets { get; }
         
 
         /* WalletID
@@ -58,13 +59,12 @@ namespace BlockchainAnalysisTool
          * 
          * add given addresses to this WalletID if they are not redunant
          */
-        public void addAddresses(string[] addressStrings)
+        public void addAddresses(List<Address> addAddresses)
         {
-            //TODO: fix
 
-            foreach (string add in addressStrings)
+            foreach (Address singleAddress in addAddresses)
             {
-                var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
+                //var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
 
                 try
                 {
@@ -101,14 +101,6 @@ namespace BlockchainAnalysisTool
 
 
 
-
-
-        /*************************************************************************
-                             Public Static Helpers
-        *************************************************************************/
-
-
-
         //TODO: Handle duplicates in related addresses (same address from multiple transactions)
         //TODO: Handle outputs as well as inputs
 
@@ -118,34 +110,55 @@ namespace BlockchainAnalysisTool
          *  group these by WallerID.
          * 
          */
-        public static List<WalletID> getRelatedWallets(Address address)
+        public List<WalletID> findRelatedWallets() //May not need to return anything?
         {
-            address.TransactionCount.ToString();
+            
             var retList = new List<WalletID>();
 
-            foreach (Transaction trans in address.Transactions)
+            foreach (Address address in walletAddresses)
             {
-                var listOfAddresses = new List<Address>();
-                
-                foreach (Input input in trans.Inputs)
+                foreach (Transaction trans in address.Transactions)
                 {
-                    listOfAddresses.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
-                }
+                    //TODO: decide whether the transaction is incoming or outgoing
+                    //TODO: address is new, create new wallet, else add to existing
 
-                retList.Add(new WalletID(listOfAddresses));
+                    var listOfAddresses = new List<Address>();
+
+                    foreach (Input input in trans.Inputs)
+                    {
+                        listOfAddresses.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
+                    }
+
+                    retList.Add(new WalletID(listOfAddresses));
+                }
             }
+            
             
             return retList;
         }
 
 
-        // Overload for getRelatedAddresses that takes a string
-        public static List<WalletID> getRelatedWallets(string addressString)
-        {
-            Address address = blockExplorer.GetBase58AddressAsync(addressString).Result;
 
-            return getRelatedWallets(address);
+
+        /*************************************************************************
+                             Public Static Helpers
+        *************************************************************************/
+        
+
+
+        /* isInList()
+         * 
+         * Find out whether the given address has been seen before in the 
+         *      MASTER_LIST and return an appropriate boolean
+         */
+        public static bool isInList(Address address)
+        {
+            return false;
         }
+
+
+
+        
         
        
     }
