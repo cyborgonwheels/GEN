@@ -11,16 +11,26 @@ namespace BlockchainAnalysisTool
 {
     public class WalletID
     {
-        private BlockExplorer blockExplorer { get; }
-        protected List<Address> walletAddresses;
+
+
+        public static List<WalletID> MASTER_LIST;
+
+        private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
+        protected List<Address> walletAddresses { get; }
+        protected List<WalletID> relatedWallets { get; }
         
 
-        public WalletID(string[] addressStrings)
+        /* WalletID
+         * 
+         * Constructor that takes a list of strings. Each string must be a valid bitcoin address,
+         *      and each is searched with the block explorer and added to the walletAddresses list
+         *      for this wallet object.
+         */
+        public WalletID(List<string> addressStrings)
         {
             //Currently client not used, may not be needed:
             BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
 
-            blockExplorer = new BlockExplorer();
             walletAddresses = new List<Address>();
 
             foreach (string add in addressStrings)
@@ -33,52 +43,122 @@ namespace BlockchainAnalysisTool
         }
 
 
-        public void addAddresses(string[] addressStrings)
+        /* WalletID
+         * 
+         * Overload for construtor that takes a list of Address objects directly
+         */
+        public WalletID(List<Address> initAddresses)
         {
-            //TODO: fix
+            walletAddresses = initAddresses;
+        }
 
-            foreach (string add in addressStrings)
+
+        /* addAddresses()
+         * 
+         * addressStrings: list of string representations of addresses to add
+         * 
+         * add given addresses to this WalletID if they are not redunant
+         */
+        public void addAddresses(List<Address> addAddresses)
+        {
+
+            foreach (Address singleAddress in addAddresses)
             {
-                var singleAddress = blockExplorer.GetBase58AddressAsync(add, filter: FilterType.All).Result;
+                //var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
 
                 try
                 {
+                    //Try to find the address in the list
                     walletAddresses.Find(x => x.Base58Check == singleAddress.Base58Check);
                 }
                 catch
                 {
+                    //Add address if we can't find it
                     walletAddresses.Add(singleAddress);
                 }
 
 
             }
         }
-        
 
-        //TODO: return list of Addresses instead of strings?
-        public List<string> getRelatedAddresses(Address address)
+
+        /* getAddressStrings()
+         * 
+         * Get a list of string representations of all addresses for this WalletID to
+         *      print to the web page.
+         */
+        public List<string> getAddressStrings()
         {
-            address.TransactionCount.ToString();
-            List<string> retList = new List<string>();
+            var retList = new List<string>();
 
-            foreach (Transaction trans in address.Transactions)
+            foreach (Address address in walletAddresses)
             {
-                foreach (Input input in trans.Inputs)
-                {
-                    retList.Add(input.PreviousOutput.Address);
-                }
+                retList.Add(address.Base58Check);
             }
-
 
             return retList;
         }
 
-        public List<string> getRelatedAddresses(string addressString)
-        {
-            var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
 
-            return getRelatedAddresses(address);
+
+        //TODO: Handle duplicates in related addresses (same address from multiple transactions)
+        //TODO: Handle outputs as well as inputs
+
+        /* getRelatedWallets
+         * 
+         * Search the transactions of a given address to find related addresses and
+         *  group these by WallerID.
+         * 
+         */
+        public List<WalletID> findRelatedWallets() //May not need to return anything?
+        {
+            
+            var retList = new List<WalletID>();
+
+            foreach (Address address in walletAddresses)
+            {
+                foreach (Transaction trans in address.Transactions)
+                {
+                    //TODO: decide whether the transaction is incoming or outgoing
+                    //TODO: address is new, create new wallet, else add to existing
+
+                    var listOfAddresses = new List<Address>();
+
+                    foreach (Input input in trans.Inputs)
+                    {
+                        listOfAddresses.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
+                    }
+
+                    retList.Add(new WalletID(listOfAddresses));
+                }
+            }
+            
+            
+            return retList;
         }
+
+
+
+
+        /*************************************************************************
+                             Public Static Helpers
+        *************************************************************************/
+        
+
+
+        /* isInList()
+         * 
+         * Find out whether the given address has been seen before in the 
+         *      MASTER_LIST and return an appropriate boolean
+         */
+        public static bool isInList(Address address)
+        {
+            return false;
+        }
+
+
+
+        
         
        
     }

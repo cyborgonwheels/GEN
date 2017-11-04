@@ -18,7 +18,8 @@ namespace WebApplication1
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
-
+        
+             
             host.Run();
         }
     }

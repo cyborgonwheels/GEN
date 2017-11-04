@@ -6,27 +6,32 @@ using Microsoft.AspNetCore.Mvc;
 using Info.Blockchain.API.BlockExplorer;
 using Info.Blockchain.API.Client;
 
+using BlockchainAnalysisTool;
+
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(String adrs)
+        public IActionResult Index(String adrs = "1L1BRq7vyf17rsnYCiw9tebY6nmiNTxQgf")
         {
             if (adrs != null)
             {
-                string addressString = adrs; //address parameter
+                ViewData["stringAddress"] = adrs; //address parameter
 
-                var customClient = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
+                //var dataList = new List<List<string>>();
+                //var walletList = WalletID.getRelatedWallets(addressString);
+                //foreach (WalletID wallet in walletList)
+                //{
+                //    dataList.Add(wallet.getAddressStrings());
+                //}
 
-                BlockExplorer blockExplorer = new BlockExplorer();
-
-                var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
+                //ViewData["ListOfWallets"] = dataList;
 
 
-                //TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
-                ViewData["Final Balance"] = address.FinalBalance;
-                ViewData["Total Recieved"] = address.TotalReceived;
-                ViewData["Total Sent"] = address.TotalSent;
+                ////TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
+                //ViewData["Final Balance"] = address.FinalBalance;
+                //ViewData["Total Recieved"] = address.TotalReceived;
+                //ViewData["Total Sent"] = address.TotalSent;
             }
 
 
@@ -51,5 +56,6 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        
     }
 }
