@@ -14,9 +14,10 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void TestMethod1()
         {
-            WalletID scumbag1 = new WalletID
+            WalletID scumbag1 = new WalletID(String 19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o)
+ 
         }
-            // Given 2 related addresses
+      
         {
         }
     }
