@@ -13,11 +13,11 @@ namespace BlockchainAnalysisTool
     {
 
 
-        public static List<WalletID> MASTER_LIST;
+        public static List<WalletID> MASTER_LIST = new List<WalletID>();
 
         private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
-        protected List<Address> walletAddresses { get; }
-        protected List<WalletID> relatedWallets { get; }
+        public List<Address> walletAddresses { get; }
+        public List<WalletID> relatedWallets { get; }
         
 
         /* WalletID
@@ -38,6 +38,8 @@ namespace BlockchainAnalysisTool
                 walletAddresses.Add(blockExplorer.GetBase58AddressAsync(add, filter: FilterType.All).Result);
             }
 
+            relatedWallets = new List<WalletID>();
+
             //TODO: Add all related addresses using below function
 
         }
@@ -49,7 +51,13 @@ namespace BlockchainAnalysisTool
          */
         public WalletID(List<Address> initAddresses)
         {
+            //Currently client not used, may not be needed:
+            BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
+
             walletAddresses = initAddresses;
+
+            relatedWallets = new List<WalletID>();
+            
         }
 
 
@@ -66,6 +74,8 @@ namespace BlockchainAnalysisTool
             {
                 //var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
 
+
+                //This try catch does not do what is intended, this should check for a null return from the Find() call
                 try
                 {
                     //Try to find the address in the list
@@ -104,7 +114,7 @@ namespace BlockchainAnalysisTool
         //TODO: Handle duplicates in related addresses (same address from multiple transactions)
         //TODO: Handle outputs as well as inputs
 
-        /* getRelatedWallets
+        /* findRelatedWallets
          * 
          * Search the transactions of a given address to find related addresses and
          *  group these by WallerID.
@@ -146,16 +156,58 @@ namespace BlockchainAnalysisTool
         
 
 
-        /* isInList()
+        /* getWallet()
          * 
-         * Find out whether the given address has been seen before in the 
-         *      MASTER_LIST and return an appropriate boolean
+         * Find the wallet that contains the given address.
+         * Return null if it is not found
          */
-        public static bool isInList(Address address)
+        public static WalletID getWallet(string addString)
         {
-            return false;
+
+            foreach (WalletID wallet in MASTER_LIST)
+            {
+                if (null != wallet.walletAddresses.Find(x => x.Base58Check == addString))
+                {
+                    return wallet;
+                }
+            }
+
+            return null;
         }
 
+        /* getWallet()
+         * 
+         * Overload for getWallet that takes an address instead of a string
+         */
+        public static WalletID getWallet(Address address)
+        {
+            string addString = address.Base58Check;
+
+            return getWallet(addString);
+        }
+
+
+        /* addWallet
+         * 
+         * Checks for redundancy and adds given wallet to the master list
+         * Return true if successful, false otherwise
+         */
+        public static bool addWallet(WalletID initWallet)
+        {
+            foreach (WalletID wallet in MASTER_LIST)
+            {
+                foreach (Address address in initWallet.walletAddresses)
+                {
+                    if (null != wallet.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
+                    {
+                        // TODO: combine initWallet and wallet
+                        return false;
+                    }
+                }
+            }
+
+            return true;    
+        }
 
 
         
