@@ -21,7 +21,7 @@ namespace BlockchainAnalysisToolTest
  
  
  
-            addressStrings.Add()
+            addressStrings.Add("19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o")
         }
       
         {
