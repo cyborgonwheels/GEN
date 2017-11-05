@@ -18,8 +18,9 @@
 @{ //Print wallets: can we do this elsewhere?
     
         //var dataList = new List<List<string>>();
-        var walletList = WalletID.getRelatedWallets((string)ViewData["stringAddress"]);
-        foreach (WalletID wallet in walletList)
+        var ourWallet = WalletID.getWallet((string)ViewData["stringAddress"]);
+        <li>WORK IN PROGRESS</li>
+        @*foreach (WalletID wallet in ourWallet.relatedWallets)
         {
             <li>=======================================================</li>
             foreach (string addressString in wallet.getAddressStrings())
@@ -27,7 +28,7 @@
                 <li>@addressString</li>
             }
 
-        }
+        }*@
     
 
 }
