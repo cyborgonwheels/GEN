@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApplication1
 using BlockchainAnalysisTool;
+
 
 namespace BlockchainAnalysisToolTest
 {
@@ -11,6 +13,9 @@ namespace BlockchainAnalysisToolTest
         // Given 1 address, create 1 wallet
         [TestMethod]
         public void TestMethod1()
+        {
+            WalletID scumbag1 = new WalletID
+        }
             // Given 2 related addresses
         {
         }
