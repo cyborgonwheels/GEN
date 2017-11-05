@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApplication1
 using BlockchainAnalysisTool;
-
+using System.Collections.Generic;
 
 namespace BlockchainAnalysisToolTest
 {
@@ -15,8 +15,13 @@ namespace BlockchainAnalysisToolTest
         public void TestMethod1()
         {
 
-            WalletID scumbag1 = new WalletID(List<"19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o">)
+            List<string> addressStrings = null;
+            WalletID scumbag1 = new WalletID(addressStrings);
  
+ 
+ 
+ 
+            addressStrings.Add()
         }
       
         {
