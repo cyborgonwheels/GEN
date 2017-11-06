@@ -10,7 +10,16 @@
 {
     <input type="text" name="adrs" id="adrs" /> //search textbox
     <input type="submit" value="Search" /> //button
+                                       
 }    
+
+<a asp-controller="index"
+   asp-action="Display"
+   asp-route-id="@ViewBag.address">   
+   View Details
+</a>
+
+<li>address 1: @ViewData["stringAddress"]</li>
 
 
 
@@ -32,6 +41,4 @@
     
 
 }
-
-
 
