@@ -129,9 +129,8 @@ namespace BlockchainAnalysisTool
          *  group these by WalletID.
          * 
          */
-        public List<WalletID> findRelatedWallets() //May not need to return anything?
+        public void updateRelatedWallets() //May not need to return anything?
         {
-            
             var retList = new List<WalletID>();
             var commonAddresses = new List<Address>();
 
@@ -139,6 +138,13 @@ namespace BlockchainAnalysisTool
             {
                 foreach (Transaction trans in address.Transactions)
                 {
+                    //sum output values to get ammount
+                    decimal ammount = 0; 
+                    foreach (var output in trans.Outputs)
+                    {
+                        ammount += output.Value.Bits;
+                    }
+
                     //TODO: decide whether the transaction is incoming or outgoing
                     //TODO: address is new, create new wallet, else add to existing
                     
@@ -154,7 +160,7 @@ namespace BlockchainAnalysisTool
             }
             
             
-            return retList;
+            
         }
 
 
@@ -166,7 +172,7 @@ namespace BlockchainAnalysisTool
 
         /* getWallet()
          * 
-         * Find the wallet that contains the given address.
+         * Find the wallet that contains the given address, from the master list.
          * Return null if it is not found
          */
         public static WalletID getWallet(string addString)
@@ -203,13 +209,15 @@ namespace BlockchainAnalysisTool
         public static bool addWallet(WalletID checkWallet)
         {
 
-            foreach (WalletID wallets in MASTER_LIST)
+            foreach (WalletID wallet in MASTER_LIST)
             {
-                if (walletAlreadyInList(checkWallet, wallets) == false)
+                if (walletsShareAddress(checkWallet, wallet) == true)
                 {
                     return false;
                 }
             }
+
+            MASTER_LIST.Add(checkWallet);
             return true;    
         }
 
@@ -217,16 +225,16 @@ namespace BlockchainAnalysisTool
          * Given a wallet, checks to see if the wallet is already in the master list
          * returns true if the wallet is not already in the master list
          */
-        public static Boolean walletAlreadyInList(WalletID checkWallet, WalletID wallets)
+        public static Boolean walletsShareAddress(WalletID checkWallet, WalletID wallet)
         {
             foreach (Address address in checkWallet.walletAddresses)
             {
-                if (null != wallets.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
+                if (null != wallet.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
 

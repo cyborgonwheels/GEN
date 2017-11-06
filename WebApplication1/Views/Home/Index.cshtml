@@ -26,19 +26,23 @@
 @using BlockchainAnalysisTool
 @{ //Print wallets: can we do this elsewhere?
     
-        //var dataList = new List<List<string>>();
-        var ourWallet = WalletID.getWallet((string)ViewData["stringAddress"]);
-        <li>WORK IN PROGRESS</li>
-        @*foreach (WalletID wallet in ourWallet.relatedWallets)
+    //var dataList = new List<List<string>>();
+    //var ourWallet = WalletID.getWallet((string)ViewData["stringAddress"]);
+    <li>WORK IN PROGRESS</li>
+    WalletID another = new WalletID(new List<string>() { "3Bb4WvBMn3XYWTUTrsF18KHnb1Tse4W82F" });
+    var add = another.walletAddresses[0];
+    var size = add.Transactions[0].Outputs[0].Value;
+    <li>@size</li>
+    @*foreach (WalletID wallet in ourWallet.relatedWallets)
+    {
+        <li>=======================================================</li>
+        foreach (string addressString in wallet.getAddressStrings())
         {
-            <li>=======================================================</li>
-            foreach (string addressString in wallet.getAddressStrings())
-            {
-                <li>@addressString</li>
-            }
+            <li>@addressString</li>
+        }
 
-        }*@
-    
+    }*@
+
 
 }
 

@@ -16,8 +16,7 @@ namespace WebApplication1.Controllers
         {
             if (adrs != null)
             {
-                String address = adrs;
-                ViewData["stringAddress"] = address; //address parameter
+                ViewData["stringAddress"] = adrs; //address parameter
                 //   19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o
                 //var addressList = new List<String>();
                 //addressList.Add(adrs);
@@ -32,14 +31,6 @@ namespace WebApplication1.Controllers
                 //{
                 //    dataList.Add(wallet.getAddressStrings());
                 //}
-
-                //ViewData["ListOfWallets"] = dataList;
-
-
-                ////TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
-                //ViewData["Final Balance"] = address.FinalBalance;
-                //ViewData["Total Recieved"] = address.TotalReceived;
-                //ViewData["Total Sent"] = address.TotalSent;
             }
 
 
