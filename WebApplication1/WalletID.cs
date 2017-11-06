@@ -39,6 +39,15 @@ namespace BlockchainAnalysisTool
             }
 
             relatedWallets = new List<WalletID>();
+            //adds each new wallet to the master list, chekcing with the addwallet function
+            foreach(Address ad in walletAddresses)
+            {
+                WalletID walletToAdd = getWallet(ad);
+                if(addWallet(walletToAdd) == true)
+                {
+                    MASTER_LIST.Add(walletToAdd);
+                }
+            }
 
             //TODO: Add all related addresses using below function
 
@@ -117,13 +126,14 @@ namespace BlockchainAnalysisTool
         /* findRelatedWallets
          * 
          * Search the transactions of a given address to find related addresses and
-         *  group these by WallerID.
+         *  group these by WalletID.
          * 
          */
         public List<WalletID> findRelatedWallets() //May not need to return anything?
         {
             
             var retList = new List<WalletID>();
+            var commonAddresses = new List<Address>();
 
             foreach (Address address in walletAddresses)
             {
@@ -131,7 +141,7 @@ namespace BlockchainAnalysisTool
                 {
                     //TODO: decide whether the transaction is incoming or outgoing
                     //TODO: address is new, create new wallet, else add to existing
-
+                    
                     var listOfAddresses = new List<Address>();
 
                     foreach (Input input in trans.Inputs)
@@ -146,8 +156,6 @@ namespace BlockchainAnalysisTool
             
             return retList;
         }
-
-
 
 
         /*************************************************************************
@@ -189,29 +197,40 @@ namespace BlockchainAnalysisTool
 
         /* addWallet
          * 
-         * Checks for redundancy and adds given wallet to the master list
+         * Attempts to add given wallet to the master list
          * Return true if successful, false otherwise
          */
-        public static bool addWallet(WalletID initWallet)
+        public static bool addWallet(WalletID checkWallet)
         {
-            foreach (WalletID wallet in MASTER_LIST)
+
+            foreach (WalletID wallets in MASTER_LIST)
             {
-                foreach (Address address in initWallet.walletAddresses)
+                if (walletAlreadyInList(checkWallet, wallets) == false)
                 {
-                    if (null != wallet.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
-                    {
-                        // TODO: combine initWallet and wallet
-                        return false;
-                    }
+                    return false;
                 }
             }
-
             return true;    
         }
 
+        /*
+         * Given a wallet, checks to see if the wallet is already in the master list
+         * returns true if the wallet is not already in the master list
+         */
+        public static Boolean walletAlreadyInList(WalletID checkWallet, WalletID wallets)
+        {
+            foreach (Address address in checkWallet.walletAddresses)
+            {
+                if (null != wallets.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        
-        
-       
+
+
+
     }
 }
