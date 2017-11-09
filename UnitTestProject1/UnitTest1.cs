@@ -22,7 +22,7 @@ namespace BlockchainAnalysisToolTest
             addressStrings.Add("19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o");
             Assert.AreEqual(scumbag1,  scumbag1, "failed to identify a wallet for the scumbag");
             addressStrings.Remove();
-            Assert.AreEqual(scumbag1,  scumbag1, "failed to identify a wallet for the scumbag");
+            Assert.AreEqual(scumbag1,  null, "the scumbag should have no wallet"):
             
         }
 
