@@ -20,6 +20,7 @@ namespace BlockchainAnalysisToolTest
 
             
             addressStrings.Add("19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o");
+                Assert.AreEqual("failed to identify a wallet for the scumbag")
         }
 
     }
