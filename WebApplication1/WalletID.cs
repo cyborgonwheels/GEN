@@ -12,13 +12,19 @@ namespace BlockchainAnalysisTool
     public class WalletID
     {
 
-
+        // Static list of all wallets ever seen; will evolve into a database
         public static List<WalletID> MASTER_LIST = new List<WalletID>();
 
+        // The blockExplorer used to access information from blockchain.info
         private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
-        public List<Address> walletAddresses { get; }
+
+        // All addresses known to belong to this wallet
+        public List<Address> walletAddresses { get; set; }                          // TODO: fix scope, create getters, setters ?
+
+        // All wallets known to be related to this wallet
         public List<WalletID> relatedWallets { get; }
         
+
 
         /* WalletID
          * 
@@ -54,6 +60,7 @@ namespace BlockchainAnalysisTool
         }
 
 
+
         /* WalletID
          * 
          * Overload for construtor that takes a list of Address objects directly
@@ -70,6 +77,7 @@ namespace BlockchainAnalysisTool
         }
 
 
+
         /* addAddresses()
          * 
          * addressStrings: list of string representations of addresses to add
@@ -81,24 +89,16 @@ namespace BlockchainAnalysisTool
 
             foreach (Address singleAddress in addAddresses)
             {
-                //var singleAddress = blockExplorer.GetBase58AddressAsync(add).Result;
-
-
-                //This try catch does not do what is intended, this should check for a null return from the Find() call
-                try
-                {
-                    //Try to find the address in the list
-                    walletAddresses.Find(x => x.Base58Check == singleAddress.Base58Check);
-                }
-                catch
+                //Try to find the address in the list
+                var find = walletAddresses.Find(x => x.Base58Check == singleAddress.Base58Check);
+                if (find == null)
                 {
                     //Add address if we can't find it
                     walletAddresses.Add(singleAddress);
                 }
-
-
             }
         }
+
 
 
         /* getAddressStrings()
@@ -120,42 +120,123 @@ namespace BlockchainAnalysisTool
 
 
 
+        /* hasAddress()
+         * 
+         * Simple method that check if this wallet contains a given address
+         * 
+         * return: true if it contains it, false otherwise
+         */
+        public bool hasAddress(Address checkAddress)
+        {
+            var check = walletAddresses.Find(x => x.Base58Check == checkAddress.Base58Check);
+            if (check == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        
+
         //TODO: Handle duplicates in related addresses (same address from multiple transactions)
         //TODO: Handle outputs as well as inputs
 
-        /* findRelatedWallets
+        /* updateRelatedWallets
          * 
          * Search the transactions of a given address to find related addresses and
          *  group these by WalletID.
          * 
          */
-        public void updateRelatedWallets() //May not need to return anything?
+        public void updateRelatedWallets() 
         {
             var retList = new List<WalletID>();
             var commonAddresses = new List<Address>();
 
+            // update everything with blockchain.info
+            List<Address> newList = new List<Address>();
             foreach (Address address in walletAddresses)
             {
-                foreach (Transaction trans in address.Transactions)
+                newList.Add(blockExplorer.GetBase58AddressAsync(address.Base58Check).Result);
+            }
+            walletAddresses = newList;
+            
+
+            foreach (Address indexAddresses in walletAddresses)
+            {
+                foreach (Transaction trans in indexAddresses.Transactions)
                 {
-                    //sum output values to get ammount
+                    //sum output values to get ammount                  // THIS IS NOT USED YET
                     decimal ammount = 0; 
                     foreach (var output in trans.Outputs)
                     {
                         ammount += output.Value.Bits;
                     }
 
-                    //TODO: decide whether the transaction is incoming or outgoing
-                    //TODO: address is new, create new wallet, else add to existing
-                    
-                    var listOfAddresses = new List<Address>();
-
-                    foreach (Input input in trans.Inputs)
+                    // get all output addresses
+                    var outAdds = new List<Address>();
+                    foreach (var output in trans.Outputs)
                     {
-                        listOfAddresses.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
+                        outAdds.Add(blockExplorer.GetBase58AddressAsync(output.Address).Result);
                     }
 
-                    retList.Add(new WalletID(listOfAddresses));
+                    // get all input addresses
+                    var inAdds = new List<Address>();
+                    foreach (var input in trans.Inputs)
+                    {
+                        inAdds.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
+                    }
+
+                    // Find out which side is this wallet on
+                    bool isOutgoing = false;
+                    foreach (Address output in outAdds)
+                    {
+                        if (hasAddress(output))
+                        {
+                            isOutgoing = true;
+                            break;
+                        }
+                    }
+
+
+                    List<Address> otherGuysAddresses;
+                    if (isOutgoing)
+                    {
+                        addAddresses(outAdds);
+                        otherGuysAddresses = inAdds;
+                    }
+                    else
+                    {
+                        addAddresses(inAdds);
+                        otherGuysAddresses = outAdds;
+
+                    }
+
+
+                    ////////  Now refresh the MASTER LIST
+                    var bbreak = false;
+                    foreach (Address add in otherGuysAddresses)
+                    {
+                        foreach (WalletID wallet in MASTER_LIST)
+                        {
+                            if (wallet.hasAddress(add))
+                            {
+                                wallet.addAddresses(otherGuysAddresses);
+                                bbreak = true;
+                                break;
+                            }
+                        }
+                        if (bbreak) break;
+                    }
+
+
+                    /////// Still need to refresh related wallets
+
+
+
+
+
+
                 }
             }
             
@@ -175,12 +256,12 @@ namespace BlockchainAnalysisTool
          * Find the wallet that contains the given address, from the master list.
          * Return null if it is not found
          */
-        public static WalletID getWallet(string addString)
+        public static WalletID getWallet(Address address)
         {
 
             foreach (WalletID wallet in MASTER_LIST)
             {
-                if (null != wallet.walletAddresses.Find(x => x.Base58Check == addString))
+                if (wallet.hasAddress(address))
                 {
                     return wallet;
                 }
@@ -189,26 +270,15 @@ namespace BlockchainAnalysisTool
             return null;
         }
 
-        /* getWallet()
-         * 
-         * Overload for getWallet that takes an address instead of a string
-         */
-        public static WalletID getWallet(Address address)
-        {
-            string addString = address.Base58Check;
-
-            return getWallet(addString);
-        }
 
 
-        /* addWallet
+        /* addWallet():
          * 
          * Attempts to add given wallet to the master list
          * Return true if successful, false otherwise
          */
         public static bool addWallet(WalletID checkWallet)
         {
-
             foreach (WalletID wallet in MASTER_LIST)
             {
                 if (walletsShareAddress(checkWallet, wallet) == true)
@@ -221,15 +291,17 @@ namespace BlockchainAnalysisTool
             return true;    
         }
 
-        /*
-         * Given a wallet, checks to see if the wallet is already in the master list
-         * returns true if the wallet is not already in the master list
+
+
+        /* walletsShareAddress():
+         * 
+         * Given two wallets, checks to see if the wallets share any addresses
          */
-        public static Boolean walletsShareAddress(WalletID checkWallet, WalletID wallet)
+        public static bool walletsShareAddress(WalletID checkWallet, WalletID wallet)
         {
             foreach (Address address in checkWallet.walletAddresses)
             {
-                if (null != wallet.walletAddresses.Find(x => x.Base58Check == address.Base58Check))
+                if (wallet.hasAddress(address))
                 {
                     return true;
                 }
@@ -238,6 +310,26 @@ namespace BlockchainAnalysisTool
         }
 
 
+        /* isNewAddress():
+         * 
+         * Given a bitcoin address, checks to see if the address has been seen 
+         * by this system before
+         * 
+         * return: True if the address has never been seen
+         *          False if the address is found
+         */
+        public static bool isNewAddress(Address checkAddress)
+        {
+            foreach (WalletID wallet in MASTER_LIST)
+            {
+                if (wallet.hasAddress(checkAddress))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
 
     }
