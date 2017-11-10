@@ -25,15 +25,28 @@
 
 @using BlockchainAnalysisTool
 @{ //Print wallets: can we do this elsewhere?
-    
-    //var dataList = new List<List<string>>();
-    //var ourWallet = WalletID.getWallet((string)ViewData["stringAddress"]);
-    <li>WORK IN PROGRESS</li>
-    WalletID another = new WalletID(new List<string>() { "3Bb4WvBMn3XYWTUTrsF18KHnb1Tse4W82F" });
-    var add = another.walletAddresses[0];
-    var size = add.Transactions[0].Outputs[0].Value;
-    <li>@size</li>
-    @*foreach (WalletID wallet in ourWallet.relatedWallets)
+
+    // search MASTER LIST
+    WalletID printWallet;
+
+    if (WalletID.isNewAddress((string)ViewData["stringAddress"]) == null)
+    {
+        // do nothing
+        return;
+        //printWallet = null;
+    }
+    else if (WalletID.isNewAddress((string)ViewData["stringAddress"]) == true)
+    {
+        printWallet = new WalletID((string)ViewData["stringAddress"]);
+    }
+    else
+    {
+        printWallet = WalletID.getWallet((string)ViewData["stringAddress"]);
+    }
+    //printWallet.update();
+
+
+    foreach (WalletID wallet in printWallet.relatedWallets)
     {
         <li>=======================================================</li>
         foreach (string addressString in wallet.getAddressStrings())
@@ -41,7 +54,7 @@
             <li>@addressString</li>
         }
 
-    }*@
+    }
 
 
 }
