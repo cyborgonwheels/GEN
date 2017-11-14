@@ -16,6 +16,7 @@ namespace WebApplication1.Controllers
         {
             if (adrs != null)
             {
+
                 ViewData["stringAddress"] = adrs; //address parameter
                 //   19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o
                 //var addressList = new List<String>();
@@ -33,6 +34,14 @@ namespace WebApplication1.Controllers
                 //}
             }
 
+
+            return View();
+        }
+
+        public IActionResult WalletLink()
+        {
+            int testCount = 77;
+            ViewBag.address = testCount;
 
             return View();
         }

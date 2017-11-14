@@ -259,13 +259,13 @@ namespace BlockchainAnalysisTool
         public static WalletID getWallet(Address address)
         {
 
-            foreach (WalletID wallet in MASTER_LIST)
-            {
-                if (wallet.hasAddress(address))
+                foreach (WalletID wallet in MASTER_LIST)
                 {
-                    return wallet;
+                    if (wallet.hasAddress(address))
+                    {
+                        return wallet;
+                    }
                 }
-            }
 
             return null;
         }
