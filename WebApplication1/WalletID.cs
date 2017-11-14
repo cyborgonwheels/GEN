@@ -24,6 +24,8 @@ namespace BlockchainAnalysisTool
         // All wallets known to be related to this wallet
         public List<WalletID> relatedWallets { get; }
         
+        //Variable that determines the parinee pranking a car individual wallet
+        // Floats are slightly less precise then double but rqqory and execution
 
 
         /* WalletID
