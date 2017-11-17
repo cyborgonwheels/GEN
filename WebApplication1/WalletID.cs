@@ -384,5 +384,40 @@ namespace BlockchainAnalysisTool
         }
 
 
+        /* Database method
+         * 
+         */
+        public static int findWallet(string findAddress)
+        {
+            //find address in database
+
+            //get wallet ID number from address
+
+            //return ID number
+
+            return 0;
+        }
+
+
+        /* Database Method
+         * 
+         */
+        public static List<string> getWalletAddresses(int walletIndex)
+        {
+            //get all addresses with parent wallet of walletIndex and return in a List<string>
+
+            return new List<string>() { "" };
+        }
+
+
+        /* Database method
+         * 
+         */
+        public static bool storeAddress(Address putAddress)
+        {
+            //find wallet index and store address in database
+
+            return false;
+        }
     }
 }
