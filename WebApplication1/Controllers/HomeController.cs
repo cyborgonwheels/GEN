@@ -6,26 +6,42 @@ using Microsoft.AspNetCore.Mvc;
 using Info.Blockchain.API.BlockExplorer;
 using Info.Blockchain.API.Client;
 
+using BlockchainAnalysisTool;
+
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(String adrs)
         {
-            string addressString = "1L1BRq7vyf17rsnYCiw9tebY6nmiNTxQgf"; //TODO: add this as a parameter
+            if (adrs != null)
+            {
 
-            var customClient = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
+                ViewData["stringAddress"] = adrs; //address parameter
+                //   19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o
+                //var addressList = new List<String>();
+                //addressList.Add(adrs);
+                //WalletID testwallet = new WalletID(addressList);
+                // WalletID.MASTER_LIST.Add(testwallet);
+                //BlockExplorer blockExplorer = new BlockExplorer();
+                //var address = blockExplorer.GetBase58AddressAsync(adrs).Result;
 
-            BlockExplorer blockExplorer = new BlockExplorer();
+                //var dataList = new List<List<string>>();
+                //var walletList = WalletID.getRelatedWallets(addressString);
+                //foreach (WalletID wallet in walletList)
+                //{
+                //    dataList.Add(wallet.getAddressStrings());
+                //}
+            }
 
-            var address = blockExplorer.GetBase58AddressAsync(addressString).Result;
-            
 
-            //TODO: write a loop that creates a list of ints from the transaction list and pass to the ViewData
-            ViewData["Final Balance"] = address.FinalBalance;
-            ViewData["Total Recieved"] = address.TotalReceived;
-            ViewData["Total Sent"] = address.TotalSent;
+            return View();
+        }
 
+        public IActionResult WalletLink()
+        {
+            int testCount = 77;
+            ViewBag.address = testCount;
 
             return View();
         }
@@ -48,5 +64,6 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        
     }
 }

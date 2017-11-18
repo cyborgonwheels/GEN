@@ -9,8 +9,12 @@ using Info.Blockchain.API.Client;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
+//THIS WILL NOT BE USED
+//CONSIDER DELETING THIS FILE
 
-namespace MvcMovie.Controllers
+
+
+namespace MvcMovie.Controllers //change namespace name?
 {
     public class TestController : Controller
     {
