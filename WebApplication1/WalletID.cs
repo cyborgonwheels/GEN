@@ -57,15 +57,7 @@ namespace BlockchainAnalysisTool
 
 
 
-        //* WalletID
-        // * 
-        // * Overload for construtor that takes a single Address 
-        // */
-        public WalletID(string initAddress) : this(new List<string>() { initAddress })
-        {
-            
-        }
-
+        
 
 
         /* addAddresses()
