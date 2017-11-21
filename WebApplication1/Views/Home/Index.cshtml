@@ -6,20 +6,36 @@
 
 <h3>Single Address Search</h3>
 
-@using (Html.BeginForm("Index", "", FormMethod.Post))
-{
-    <input type="text" name="adrs" id="adrs" /> //search textbox
-    <input type="submit" value="Search" /> //button
-                                       
-}    
+
+ <form asp-controller="" asp-action="Index" method="get">
+    <p>
+        <input type="text" name="adrs">
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 
 <a asp-controller=""
    asp-action="WalletLink"
-   asp-route-id="@ViewBag.test">   
-   View Details
-</a>
+   asp-route-id="WalletIndex">   
+   Wallet 1
+</a><br />
+<a asp-controller=""
+   asp-action="WalletLink"
+   asp-route-id="">
+    Wallet 2
+</a><br />
+<a asp-controller=""
+   asp-action="WalletLink"
+   asp-route-id="@ViewBag.test">
+    Wallet 3
+</a><br />
+@Html.ActionLink("Wallet 4", "WalletLink", "", null, new { @WalletID = "person1" })<br />
 
 <li>address 1: @ViewData["stringAddress"]</li>
+
+
+
 
 
 

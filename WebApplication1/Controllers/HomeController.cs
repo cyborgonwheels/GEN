@@ -38,10 +38,11 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult WalletLink()
+        public IActionResult WalletLink(int index)
         {
-            int testCount = 77;
+            int testCount = 77; 
             ViewBag.address = testCount;
+            ViewData["param"] = index;
 
             return View();
         }
