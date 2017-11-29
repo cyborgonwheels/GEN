@@ -9,11 +9,11 @@ using Info.Blockchain.API.Models;
 
 namespace BlockchainAnalysisTool
 {
-    public class WalletID
+    public class WalletID_OLD
     {
 
         // Static list of all wallets ever seen; will evolve into a database
-        public static List<WalletID> MASTER_LIST = new List<WalletID>();
+        public static List<WalletID_OLD> MASTER_LIST = new List<WalletID_OLD>();
 
         // The blockExplorer used to access information from blockchain.info
         private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
@@ -32,7 +32,7 @@ namespace BlockchainAnalysisTool
          *      and each is searched with the block explorer and added to the walletAddresses list
          *      for this wallet object.
          */
-        public WalletID(List<string> addressStrings)
+        public WalletID_OLD(List<string> addressStrings)
         {
             //Currently client not used, may not be needed:
             BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
@@ -56,7 +56,7 @@ namespace BlockchainAnalysisTool
         // * 
         // * Overload for construtor that takes a single Address 
         // */
-        public WalletID(string initAddress) : this(new List<string>() { initAddress })
+        public WalletID_OLD(string initAddress) : this(new List<string>() { initAddress })
         {
             //Nothing needs to be done here
         }
@@ -146,10 +146,10 @@ namespace BlockchainAnalysisTool
          * Find the wallet that contains the given address, from the master list.
          * Return null if it is not found
          */
-        public static WalletID getWallet(Address address)
+        public static WalletID_OLD getWallet(Address address)
         {
 
-                foreach (WalletID wallet in MASTER_LIST)
+                foreach (WalletID_OLD wallet in MASTER_LIST)
                 {
                     if (wallet.hasAddress(address))
                     {
@@ -166,7 +166,7 @@ namespace BlockchainAnalysisTool
          * 
          * Overload for getWallet that takes a string
          */
-        public static WalletID getWallet(string address)
+        public static WalletID_OLD getWallet(string address)
         {
             return getWallet(blockExplorer.GetBase58AddressAsync(address).Result);
         }
@@ -178,9 +178,9 @@ namespace BlockchainAnalysisTool
          * Attempts to add given wallet to the master list
          * Return true if successful, false otherwise
          */
-        public static bool addWallet(WalletID checkWallet)
+        public static bool addWallet(WalletID_OLD checkWallet)
         {
-            foreach (WalletID wallet in MASTER_LIST)
+            foreach (WalletID_OLD wallet in MASTER_LIST)
             {
                 if (walletsShareAddress(checkWallet, wallet) == true)
                 {
@@ -198,7 +198,7 @@ namespace BlockchainAnalysisTool
          * 
          * Given two wallets, checks to see if the wallets share any addresses
          */
-        public static bool walletsShareAddress(WalletID checkWallet, WalletID wallet)
+        public static bool walletsShareAddress(WalletID_OLD checkWallet, WalletID_OLD wallet)
         {
             foreach (Address address in checkWallet.walletAddresses)
             {
@@ -226,7 +226,7 @@ namespace BlockchainAnalysisTool
                 return true;
             }
 
-            foreach (WalletID wallet in MASTER_LIST)
+            foreach (WalletID_OLD wallet in MASTER_LIST)
             {
                 if (wallet.hasAddress(checkAddress))
                 {

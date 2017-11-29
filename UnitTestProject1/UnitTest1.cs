@@ -16,7 +16,7 @@ namespace BlockchainAnalysisToolTest
         {
 
             List<string> addressStrings = null;
-            WalletID scumbag1 = new WalletID(addressStrings);
+            WalletID_OLD scumbag1 = new WalletID_OLD(addressStrings);
 
             
             addressStrings.Add("19TBERtSZYw4V6mXbHpczBgQCYH5MzfM7o");

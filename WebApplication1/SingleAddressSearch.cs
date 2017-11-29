@@ -20,7 +20,7 @@ namespace WebApplication1
 
             // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
 
-            List<WalletID> search = new List<WalletID>();
+            List<WalletID_OLD> search = new List<WalletID_OLD>();
         
         }
     }
