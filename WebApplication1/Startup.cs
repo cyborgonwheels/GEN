@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+//using EFGetStarted.AspNetCore.ExistingDb.Models;
+using BlockchainAnalysisTool.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1
 {
@@ -29,6 +32,9 @@ namespace WebApplication1
         {
             // Add framework services.
             services.AddMvc();
+
+            var connection = @"Server=up-gen.database.windows.net;Database=GEN_BLK;Trusted_Connection=False;Encrypt=True;User ID=genblock;password=UPcapstone1!";
+            services.AddDbContext<GEN_BLKContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
