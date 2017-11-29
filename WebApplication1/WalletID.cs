@@ -21,9 +21,10 @@ namespace BlockchainAnalysisTool
         // All addresses known to belong to this wallet
         private List<Address> walletAddresses { get; set; }                          // TODO: fix scope, create getters, setters ?
 
-        // All wallets known to be related to this wallet
-        public List<WalletID> relatedWallets { get; }
-        
+        // Priority of wallet
+        private float walletPriority { get; set; }
+
+
 
         /* WalletID
          * 
@@ -43,16 +44,10 @@ namespace BlockchainAnalysisTool
                 walletAddresses.Add(blockExplorer.GetBase58AddressAsync(add, filter: FilterType.All).Result);
             }
 
-            relatedWallets = new List<WalletID>();
-
-            //update(); //update information on all addresses
-
             addWallet(this); //Add to master list
 
-
-            //Variable that determines the  sort ppriority  for individual wallet
-            // Floats are slightly less precise then double but require llqory and execution
-            float walletPriority = 1.0f;
+            //Variable that determines the sort priority for individual wallet
+            walletPriority = 0.5f;
         }
 
 
@@ -63,7 +58,7 @@ namespace BlockchainAnalysisTool
         // */
         public WalletID(string initAddress) : this(new List<string>() { initAddress })
         {
-            
+            //Nothing needs to be done here
         }
 
 
@@ -138,132 +133,6 @@ namespace BlockchainAnalysisTool
         }
 
 
-
-
-        //TODO: Handle duplicates in related addresses (same address from multiple transactions)
-        //TODO: Handle outputs as well as inputs
-
-        /* update
-         * 
-         * Search the transactions of a given address to find related addresses and
-         *  group these by WalletID.
-         * 
-         */
-        public void update() 
-        {
-            var retList = new List<WalletID>();
-            var commonAddresses = new List<Address>();
-
-            // update everything with blockchain.info
-            List<Address> newList = new List<Address>();
-            foreach (Address address in walletAddresses)
-            {
-                newList.Add(blockExplorer.GetBase58AddressAsync(address.Base58Check).Result);
-            }
-            walletAddresses = newList;
-            
-
-            foreach (Address indexAddresses in walletAddresses)
-            {
-                foreach (Transaction trans in indexAddresses.Transactions)
-                {
-                    ////sum output values to get ammount                  // THIS IS NOT USED YET
-                    //decimal ammount = 0; 
-                    //foreach (var output in trans.Outputs)
-                    //{
-                    //    ammount += output.Value.Bits;
-                    //}
-
-                    // get all output addresses
-                    var outAdds = new List<Address>();
-                    foreach (var output in trans.Outputs)
-                    {
-                        outAdds.Add(blockExplorer.GetBase58AddressAsync(output.Address).Result);
-                    }
-
-                    // get all input addresses
-                    var inAdds = new List<Address>();
-                    foreach (var input in trans.Inputs)
-                    {
-                        inAdds.Add(blockExplorer.GetBase58AddressAsync(input.PreviousOutput.Address).Result);
-                    }
-
-                    // Find out which side is this wallet on
-                    bool isOutgoing = false;
-                    foreach (Address output in outAdds)
-                    {
-                        if (hasAddress(output))
-                        {
-                            isOutgoing = true;
-                            break;
-                        }
-                    }
-
-
-                    //List<Address> otherGuysAddresses = new List<Address>();
-                    //if (isOutgoing)
-                    //{
-                    //    addAddresses(outAdds);
-                    //    otherGuysAddresses = inAdds;
-                    //}
-                    //else
-                    //{
-                    //    addAddresses(inAdds);
-                    //    otherGuysAddresses = outAdds;
-
-                    //}
-
-
-                    //////////  Now refresh the MASTER LIST
-                    //var bbreak = false;
-                    //foreach (Address add in otherGuysAddresses)
-                    //{
-                    //    foreach (WalletID wallet in MASTER_LIST)
-                    //    {
-                    //        if (wallet.hasAddress(add))
-                    //        {
-                    //            wallet.addAddresses(otherGuysAddresses);
-                    //            bbreak = true;
-                    //            break;
-                    //        }
-                    //    }
-                    //    if (bbreak) break;
-                    //}
-
-
-                    /////// Still need to refresh related wallets
-
-
-                    if (isOutgoing)
-                    {
-                        var strings = new List<string>();
-                        foreach (var x in outAdds)
-                        {
-                            strings.Add(x.Base58Check);
-
-                        }
-                        relatedWallets.Add(new WalletID(strings));
-
-                    }
-                    else
-                    {
-                        var strings = new List<string>();
-                        foreach (var x in inAdds)
-                        {
-                            strings.Add(x.Base58Check);
-
-                        }
-                        relatedWallets.Add(new WalletID(strings));
-                    }
-
-
-
-                }
-            }
-            
-            
-            
-        }
 
 
         /*************************************************************************
@@ -384,7 +253,12 @@ namespace BlockchainAnalysisTool
         }
 
 
-        /* Database method
+
+
+
+
+
+        /* Database method dummy
          * 
          */
         public static int findWallet(string findAddress)
@@ -399,7 +273,7 @@ namespace BlockchainAnalysisTool
         }
 
 
-        /* Database Method
+        /* Database Method Dummy
          * 
          */
         public static List<string> getWalletAddresses(int walletIndex)
@@ -410,7 +284,7 @@ namespace BlockchainAnalysisTool
         }
 
 
-        /* Database method
+        /* Database method Dummy
          * 
          */
         public static bool storeAddress(Address putAddress)
