@@ -8,9 +8,9 @@ namespace BlockchainAnalysisToolTest
 
     // Each test method that you want Test Explorer to run must have the [TestMethod]attribute
     [TestClass]
-    public class BlockchainAnalysisToolTests
+    public class SortTest
     {
-        // Given 1 address, create 1 wallet
+        // Given a blank database, everything is equivalent
         [TestMethod]
         public void TestMethod1()
         {
