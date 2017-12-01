@@ -12,9 +12,11 @@ namespace BlockchainAnalysisTool.Models
         public virtual DbSet<Trans> Trans { get; set; }
         public virtual DbSet<WalletId> WalletId { get; set; }
 
-        public GEN_BLKContext(DbContextOptions<GEN_BLKContext> options)
-            : base(options)
-        { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=up-gen.database.windows.net;Database=GEN_BLK;Trusted_Connection=False;Encrypt=True;User ID=genblock;password=UPcapstone1!");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
