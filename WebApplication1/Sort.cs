@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @cyborgonwheels
- Sign out
- Watch 4
-  Star 0  Fork 0 cyborgonwheels/GEN
- Code  Issues 0  Pull requests 1  Projects 0  Wiki  Insights  Settings
-Branch: master Find file Copy pathGEN/WebApplication1/WalletID_OLD.cs
-eba8eff  a day ago
-@SuperStuffman SuperStuffman Renamed old version of Wallet ID to avoid confusion. Now we will use …
-1 contributor
-RawBlameHistory    
 298 lines (224 sloc)  7.72 KB
 using System;
 using System.Collections.Generic;
@@ -27,11 +10,11 @@ using Info.Blockchain.API.Models;
 
 namespace BlockchainAnalysisTool
 {
-    public class WalletID_OLD
+    public class Sort
     {
 
-        // Static list of all wallets ever seen; will evolve into a database
-        public static List<WalletID_OLD> MASTER_LIST = new List<WalletID_OLD>();
+        // Static list of current wallets ever seen; c  a database
+        public static List<Sort> MASTER_LIST = new List<Sort>();
 
         // The blockExplorer used to access information from blockchain.info
         private static BlockExplorer blockExplorer { get; } = new BlockExplorer();
@@ -43,42 +26,7 @@ namespace BlockchainAnalysisTool
         private float walletPriority { get; set; }
 
 
-
-        /* WalletID
-         * 
-         * Constructor that takes a list of strings. Each string must be a valid bitcoin address,
-         *      and each is searched with the block explorer and added to the walletAddresses list
-         *      for this wallet object.
-         */
-        public WalletID_OLD(List<string> addressStrings)
-        {
-            //Currently client not used, may not be needed:
-            BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
-
-            walletAddresses = new List<Address>();
-
-            foreach (string add in addressStrings)
-            {
-                walletAddresses.Add(blockExplorer.GetBase58AddressAsync(add, filter: FilterType.All).Result);
-            }
-
-            addWallet(this); //Add to master list
-
-            //Variable that determines the sort priority for individual wallet
-            walletPriority = 0.5f;
         }
-
-
-
-        //* WalletID
-        // * 
-        // * Overload for construtor that takes a single Address 
-        // */
-        public WalletID_OLD(string initAddress) : this(new List<string>() { initAddress })
-        {
-            //Nothing needs to be done here
-        }
-
 
 
         /* addAddresses()
@@ -105,11 +53,6 @@ namespace BlockchainAnalysisTool
 
 
         /* getAddresses():
-         * 
-         * gets the list of addresses for this wallet
-         */
-        public List<Address> getAddresses()
-        {
             return walletAddresses;
         }
 
