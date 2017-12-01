@@ -15,7 +15,7 @@ namespace BlockchainAnalysisTool.Controllers
 
         public WalletIdsController(GEN_BLKContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: WalletIds

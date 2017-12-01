@@ -12,6 +12,13 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly GEN_BLKContext _context;
+
+        public HomeController(GEN_BLKContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index(String adrs)
         {
             if (adrs != null)
