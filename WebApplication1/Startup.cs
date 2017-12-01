@@ -33,7 +33,7 @@ namespace WebApplication1
             // Add framework services.
             services.AddMvc();
 
-            var connection = @"Server=up-gen.database.windows.net;Database=GEN_BLK;Trusted_Connection=False;Encrypt=True;User ID=genblock;password=UPcapstone1!";
+            var connection = @"Server=gen-sql.database.windows.net;Database=gen-blockchain-db;Trusted_Connection=False;Encrypt=True;User ID=up_blockchain;password=UPBl0ckChainSecurity2017!";
             services.AddDbContext<GEN_BLKContext>(options => options.UseSqlServer(connection));
         }
 
