@@ -12,20 +12,22 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GEN_BLKContext _context;
+        private readonly BlockchainContext _context;
 
-        public HomeController(GEN_BLKContext context)
+        public HomeController(BlockchainContext context)
         {
             _context = context;
         }
 
         public IActionResult Index(String adrs)
         {
+            BlockExplorer be = new BlockExplorer();
+
             if (adrs != null)
             {
+                var x = _context.Wallet.Single(w => w.Wid == 1).Wid; //address parameter
 
-                ViewData["stringAddress"] = adrs; //address parameter
-                
+                ViewData["stringAddress"] = x;
             }
 
 

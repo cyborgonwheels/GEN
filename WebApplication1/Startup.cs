@@ -33,7 +33,7 @@ namespace WebApplication1
             services.AddMvc();
 
             var connection = @"Server=gen-sql.database.windows.net;Database=gen-blockchain-db;Trusted_Connection=False;Encrypt=True;User ID=up_blockchain;password=UPBl0ckChainSecurity2017!";
-            services.AddDbContext<GEN_BLKContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<BlockchainContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

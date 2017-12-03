@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace BlockchainAnalysisTool.Models
 {
-    public partial class Input
+    public partial class OutputId
     {
-        public int? Aid { get; set; }
+        public string Aid { get; set; }
         public int? Tid { get; set; }
-        public int IndexIn { get; set; }
+        public int IndexOut { get; set; }
     }
 }
