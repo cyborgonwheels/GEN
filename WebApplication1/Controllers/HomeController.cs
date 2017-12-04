@@ -8,7 +8,7 @@ using Info.Blockchain.API.Client;
 
 using BlockchainAnalysisTool.Models;
 
-namespace WebApplication1.Controllers
+namespace BlockchainCapstoneWebApp.Controllers
 {
     public class HomeController : Controller
     {

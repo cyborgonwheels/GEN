@@ -22,7 +22,14 @@ namespace BlockchainAnalysisTool.Controllers
         public async Task<IActionResult> Index(String adrs)
         {
             ViewData["searchedAddress"] = adrs;
-            return View(await _context.Wallet.ToListAsync());
+            List<Addr> addList = _context.Addr.Where(x => x.Aid == adrs).ToList();
+
+            List<int?> widList = new List<int?>();
+            foreach (Addr add in addList) {
+                widList.Add(add.ParentWallet);
+            }
+
+            return View(await _context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync());
         }
 
         // GET: Wallets/Details/5

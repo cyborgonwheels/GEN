@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using BlockchainAnalysisTool;
 
-namespace WebApplication1
+namespace BlockchainCapstoneWebApp
 {
 
 	/*

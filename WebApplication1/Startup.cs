@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using BlockchainAnalysisTool.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1
+namespace BlockchainCapstoneWebApp
 {
     public class Startup
     {
