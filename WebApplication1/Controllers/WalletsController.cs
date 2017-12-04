@@ -40,14 +40,20 @@ namespace BlockchainAnalysisTool.Controllers
                 return NotFound();
             }
 
+            // Use data dictionary for wallet info, pass list of Addr to View()
+
             var wallet = await _context.Wallet
                 .SingleOrDefaultAsync(m => m.Wid == id);
+            ViewData["Wallet"] = wallet.Wid;
+
+            var addList = await _context.Addr.Where(add => add.ParentWallet == id).ToListAsync();
+
             if (wallet == null)
             {
                 return NotFound();
             }
 
-            return View(wallet);
+            return View(addList);
         }
 
         // GET: Wallets/Create

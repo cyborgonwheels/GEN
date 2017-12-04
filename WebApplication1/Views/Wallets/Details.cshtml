@@ -1,42 +1,56 @@
-@model BlockchainAnalysisTool.Models.Wallet
+@model IEnumerable<BlockchainAnalysisTool.Models.Addr>
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details for Wallet: @ViewData["Wallet"]</h2>
 
-<div>
-    <h4>Wallet</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfAddresses)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfAddresses)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfTransactions)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfTransactions)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Balance)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Balance)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Wid">Edit</a> |
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountSent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountReceived)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastSentTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastReceivedFrom)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            //if (item.NumberOfTransactions < 5) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountSent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountReceived)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastSentTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastReceivedFrom)
+                </td>
+            </tr>
+            //}
+        }
+
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
