@@ -10,6 +10,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170425-07" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.17" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.17" />
+    <PackageReference Include="Microsoft.Composition" Version="1.0.27" ExcludeAssets="All" />
+    <PackageReference Include="System.Composition" Version="1.0.31" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,54 @@
+@model IEnumerable<BlockchainAnalysisTool.Models.Wallet>
+
+@{
+    ViewData["Title"] = "index";
+}
+
+<h2>Wallet Information</h2>
+<p>Searched Address: @ViewData["searchedAddress"]</p>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfAddresses)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfTransactions)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Priority)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Balance)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    //if (item.NumberOfTransactions < 5) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfAddresses)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTransactions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Wid">Details</a> 
+            </td>
+        </tr>
+    //}
+}
+    </tbody>
+</table>
