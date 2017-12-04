@@ -24,7 +24,7 @@ namespace BlockchainAnalysisTool.Controllers
             ViewData["searchedAddress"] = adrs;
             List<Addr> addList = _context.Addr.Where(x => x.Aid == adrs).ToList();
 
-            List<int?> widList = new List<int?>();
+            List<int> widList = new List<int>();
             foreach (Addr add in addList) {
                 widList.Add(add.ParentWallet);
             }
@@ -33,7 +33,7 @@ namespace BlockchainAnalysisTool.Controllers
         }
 
         // GET: Wallets/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
@@ -73,7 +73,7 @@ namespace BlockchainAnalysisTool.Controllers
         }
 
         // GET: Wallets/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -124,7 +124,7 @@ namespace BlockchainAnalysisTool.Controllers
         }
 
         // GET: Wallets/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
