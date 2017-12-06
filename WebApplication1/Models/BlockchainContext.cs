@@ -12,11 +12,9 @@ namespace BlockchainAnalysisTool.Models
         public virtual DbSet<Trans> Trans { get; set; }
         public virtual DbSet<Wallet> Wallet { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=gen-sql.database.windows.net;Database=gen-blockchain-db;Trusted_Connection=False;Encrypt=True;User ID=up_blockchain;password=UPBl0ckChainSecurity2017!");
-        }
+        public BlockchainContext(DbContextOptions<BlockchainContext> options)
+            : base(options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,9 +27,13 @@ namespace BlockchainAnalysisTool.Models
                     .HasColumnName("AID")
                     .HasColumnType("varchar(50)");
 
-                entity.Property(e => e.LastReceivedFrom).HasColumnType("varchar(50)");
+                entity.Property(e => e.LastReceivedFrom)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
 
-                entity.Property(e => e.LastSentTo).HasColumnType("varchar(50)");
+                entity.Property(e => e.LastSentTo)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<InputId>(entity =>
@@ -42,6 +44,7 @@ namespace BlockchainAnalysisTool.Models
                 entity.ToTable("InputID");
 
                 entity.Property(e => e.Aid)
+                    .IsRequired()
                     .HasColumnName("AID")
                     .HasColumnType("varchar(50)");
 
@@ -56,6 +59,7 @@ namespace BlockchainAnalysisTool.Models
                 entity.ToTable("OutputID");
 
                 entity.Property(e => e.Aid)
+                    .IsRequired()
                     .HasColumnName("AID")
                     .HasColumnType("varchar(50)");
 

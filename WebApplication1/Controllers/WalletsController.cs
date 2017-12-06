@@ -55,11 +55,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             // Use data dictionary for wallet info, pass list of Addr to View()
 
             var wallet = await _context.Wallet
@@ -101,11 +96,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var wallet = await _context.Wallet.SingleOrDefaultAsync(m => m.Wid == id);
             if (wallet == null)
             {
@@ -152,11 +142,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var wallet = await _context.Wallet
                 .SingleOrDefaultAsync(m => m.Wid == id);
             if (wallet == null)
