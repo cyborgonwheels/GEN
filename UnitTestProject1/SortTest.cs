@@ -97,7 +97,7 @@ namespace BlockchainAnalysisToolTest
 
 
 
-        // CRUD Test for Wallet Model
+        // CRUD Test for Address Model
         [TestMethod]
         public void AddrTest()
         {
@@ -166,206 +166,157 @@ namespace BlockchainAnalysisToolTest
         }
 
 
-        // CRUD Test for Wallet Model
+        // CRUD Test for Transaction Model
         [TestMethod]
         public void TransTest()
         {
             // Create new Wallet
 
-            int initWid = 6541;
-            int? initNumAdd = 6846;
-            int? initNumTrans = 1838;
-            double? initPriority = 861.868;
-            double? initBalance = 654.654;
+            int initTid = 15368748;
+            int? initNumberOfInputs = 153584;
+            int? initNumberOfOutputs = 49975;
+            double? initAmountSent = 21.221;
+            int initFromWallet = 489;
+            int initToWallet = 77654;
 
-            Wallet wallet = new Wallet
+            Trans trans = new Trans
             {
-                Wid = initWid,
-                NumberOfAddresses = initNumAdd,
-                NumberOfTransactions = initNumTrans,
-                Priority = initPriority,
-                Balance = initBalance
+                Tid = initTid,
+                NumberOfInputs = initNumberOfInputs,
+                NumberOfOutputs = initNumberOfOutputs,
+                AmountSent = initAmountSent,
+                FromWallet = initFromWallet,
+                ToWallet = initToWallet
             };
 
 
             // Read from Wallet
 
-            Assert.AreEqual(initWid, wallet.Wid);
-            Assert.AreEqual(initNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(initNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(initPriority, wallet.Priority);
-            Assert.AreEqual(initBalance, wallet.Balance);
+            Assert.AreEqual(trans.Tid, initTid);
+            Assert.AreEqual(trans.NumberOfInputs, initNumberOfInputs);
+            Assert.AreEqual(trans.NumberOfOutputs, initNumberOfOutputs);
+            Assert.AreEqual(trans.AmountSent, initAmountSent);
+            Assert.AreEqual(trans.FromWallet, initFromWallet);
+            Assert.AreEqual(trans.ToWallet, initToWallet);
 
 
             // Update Wallet
 
-            int newWid = 763;
-            int? newNumAdd = 1124;
-            int? newNumTrans = 7995;
-            double? newPriority = 122.188;
-            double? newBalance = 799.511;
+            int newTid = 116798;
+            int? newNumberOfInputs = 134;
+            int? newNumberOfOutputs = 99421;
+            double? newAmountSent = 9877.211;
+            int newFromWallet = 6498;
+            int newToWallet = 16477;
 
-            wallet.Wid = newWid;
-            wallet.NumberOfAddresses = newNumAdd;
-            wallet.NumberOfTransactions = newNumTrans;
-            wallet.Priority = newPriority;
-            wallet.Balance = newBalance; // haha newBalance :P
+            trans.Tid = newTid;
+            trans.NumberOfInputs = newNumberOfInputs;
+            trans.NumberOfOutputs = newNumberOfOutputs;
+            trans.AmountSent = newAmountSent;
+            trans.FromWallet = newFromWallet;
+            trans.ToWallet = newToWallet;
 
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(newNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(newNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(newPriority, wallet.Priority);
-            Assert.AreEqual(newBalance, wallet.Balance);
+            Assert.AreEqual(trans.Tid, newTid);
+            Assert.AreEqual(trans.NumberOfInputs, newNumberOfInputs);
+            Assert.AreEqual(trans.NumberOfOutputs, newNumberOfOutputs);
+            Assert.AreEqual(trans.AmountSent, newAmountSent);
+            Assert.AreEqual(trans.FromWallet, newFromWallet);
+            Assert.AreEqual(trans.ToWallet, newToWallet);
 
 
             // Delete values
 
-            wallet.NumberOfAddresses = null;
-            wallet.NumberOfTransactions = null;
-            wallet.Priority = null;
-            wallet.Balance = null;
+            trans.NumberOfInputs = null;
+            trans.NumberOfOutputs = null;
+            trans.AmountSent = null;
 
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(null, wallet.NumberOfAddresses);
-            Assert.AreEqual(null, wallet.NumberOfTransactions);
-            Assert.AreEqual(null, wallet.Priority);
-            Assert.AreEqual(null, wallet.Balance);
+            Assert.AreEqual(null, trans.NumberOfInputs);
+            Assert.AreEqual(null, trans.NumberOfOutputs);
+            Assert.AreEqual(null, trans.AmountSent);
 
         }
 
 
-        // CRUD Test for Wallet Model
+        // CRUD Test for Input Model
         [TestMethod]
         public void InputTest()
         {
             // Create new Wallet
 
-            int initWid = 6541;
-            int? initNumAdd = 6846;
-            int? initNumTrans = 1838;
-            double? initPriority = 861.868;
-            double? initBalance = 654.654;
+            string initAid = "vcistuy";
+            int initTid = 16987;
+            int initIndexIn = 41658;
 
-            Wallet wallet = new Wallet
+            InputId input = new InputId
             {
-                Wid = initWid,
-                NumberOfAddresses = initNumAdd,
-                NumberOfTransactions = initNumTrans,
-                Priority = initPriority,
-                Balance = initBalance
+                Aid = initAid,
+                Tid = initTid,
+                IndexIn = initIndexIn
             };
 
 
             // Read from Wallet
 
-            Assert.AreEqual(initWid, wallet.Wid);
-            Assert.AreEqual(initNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(initNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(initPriority, wallet.Priority);
-            Assert.AreEqual(initBalance, wallet.Balance);
+            Assert.AreEqual(initAid, input.Aid);
+            Assert.AreEqual(initTid, input.Tid);
+            Assert.AreEqual(initIndexIn, input.IndexIn);
 
 
             // Update Wallet
 
-            int newWid = 763;
-            int? newNumAdd = 1124;
-            int? newNumTrans = 7995;
-            double? newPriority = 122.188;
-            double? newBalance = 799.511;
+            string newAid = "oxiuvycb";
+            int newTid = 98744;
+            int newIndexIn = 349;
 
-            wallet.Wid = newWid;
-            wallet.NumberOfAddresses = newNumAdd;
-            wallet.NumberOfTransactions = newNumTrans;
-            wallet.Priority = newPriority;
-            wallet.Balance = newBalance; // haha newBalance :P
+            input.Aid = newAid;
+            input.Tid = newTid;
+            input.IndexIn = newIndexIn;
 
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(newNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(newNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(newPriority, wallet.Priority);
-            Assert.AreEqual(newBalance, wallet.Balance);
-
-
-            // Delete values
-
-            wallet.NumberOfAddresses = null;
-            wallet.NumberOfTransactions = null;
-            wallet.Priority = null;
-            wallet.Balance = null;
-
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(null, wallet.NumberOfAddresses);
-            Assert.AreEqual(null, wallet.NumberOfTransactions);
-            Assert.AreEqual(null, wallet.Priority);
-            Assert.AreEqual(null, wallet.Balance);
+            Assert.AreEqual(newAid, input.Aid);
+            Assert.AreEqual(newTid, input.Tid);
+            Assert.AreEqual(newIndexIn, input.IndexIn);
 
         }
 
 
-        // CRUD Test for Wallet Model
+        // CRUD Test for Output Model
         [TestMethod]
         public void OutputTest()
         {
             // Create new Wallet
 
-            int initWid = 6541;
-            int? initNumAdd = 6846;
-            int? initNumTrans = 1838;
-            double? initPriority = 861.868;
-            double? initBalance = 654.654;
+            string initAid = "vcistuy";
+            int initTid = 16987;
+            int initIndexOut = 41658;
 
-            Wallet wallet = new Wallet
+            OutputId output = new OutputId
             {
-                Wid = initWid,
-                NumberOfAddresses = initNumAdd,
-                NumberOfTransactions = initNumTrans,
-                Priority = initPriority,
-                Balance = initBalance
+                Aid = initAid,
+                Tid = initTid,
+                IndexOut = initIndexOut
             };
 
 
             // Read from Wallet
 
-            Assert.AreEqual(initWid, wallet.Wid);
-            Assert.AreEqual(initNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(initNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(initPriority, wallet.Priority);
-            Assert.AreEqual(initBalance, wallet.Balance);
+            Assert.AreEqual(initAid, output.Aid);
+            Assert.AreEqual(initTid, output.Tid);
+            Assert.AreEqual(initIndexOut, output.IndexOut);
 
 
             // Update Wallet
 
-            int newWid = 763;
-            int? newNumAdd = 1124;
-            int? newNumTrans = 7995;
-            double? newPriority = 122.188;
-            double? newBalance = 799.511;
+            string newAid = "oxiuvycb";
+            int newTid = 98744;
+            int newIndexOut = 349;
 
-            wallet.Wid = newWid;
-            wallet.NumberOfAddresses = newNumAdd;
-            wallet.NumberOfTransactions = newNumTrans;
-            wallet.Priority = newPriority;
-            wallet.Balance = newBalance; // haha newBalance :P
+            output.Aid = newAid;
+            output.Tid = newTid;
+            output.IndexOut = newIndexOut;
 
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(newNumAdd, wallet.NumberOfAddresses);
-            Assert.AreEqual(newNumTrans, wallet.NumberOfTransactions);
-            Assert.AreEqual(newPriority, wallet.Priority);
-            Assert.AreEqual(newBalance, wallet.Balance);
-
-
-            // Delete values
-
-            wallet.NumberOfAddresses = null;
-            wallet.NumberOfTransactions = null;
-            wallet.Priority = null;
-            wallet.Balance = null;
-
-            Assert.AreEqual(newWid, wallet.Wid);
-            Assert.AreEqual(null, wallet.NumberOfAddresses);
-            Assert.AreEqual(null, wallet.NumberOfTransactions);
-            Assert.AreEqual(null, wallet.Priority);
-            Assert.AreEqual(null, wallet.Balance);
+            Assert.AreEqual(newAid, output.Aid);
+            Assert.AreEqual(newTid, output.Tid);
+            Assert.AreEqual(newIndexOut, output.IndexOut);
 
         }
     }
