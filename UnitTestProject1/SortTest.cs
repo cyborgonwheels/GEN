@@ -11,7 +11,7 @@ namespace BlockchainAnalysisToolTest
     [TestClass]
     public class SortTest
     {
-        // Given a blank database, everything is equivalent
+        // Interact with Database
         [TestMethod]
         public void TestMethod1()
         {
@@ -101,7 +101,7 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void AddrTest()
         {
-            // Create new Wallet
+            // Create new Address
 
             string initAid = "hfduiaoiudshf";
             int initParentWallet = 14896845;
@@ -121,7 +121,7 @@ namespace BlockchainAnalysisToolTest
             };
 
 
-            // Read from Wallet
+            // Read from Address
 
             Assert.AreEqual(initAid, addr.Aid);
             Assert.AreEqual(initParentWallet, addr.ParentWallet);
@@ -131,7 +131,7 @@ namespace BlockchainAnalysisToolTest
             Assert.AreEqual(initLastReceivedFrom, addr.LastReceivedFrom);
 
 
-            // Update Wallet
+            // Update Address
 
             string newAid = "yubiusiuy3";
             int newParentWallet = 778416;
@@ -155,7 +155,7 @@ namespace BlockchainAnalysisToolTest
             Assert.AreEqual(newLastReceivedFrom, addr.LastReceivedFrom);
 
 
-            // Delete values
+            // Delete values in Address
 
             addr.AmountSent = null;
             addr.AmountReceived = null;
@@ -170,7 +170,7 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void TransTest()
         {
-            // Create new Wallet
+            // Create new Transaction
 
             int initTid = 15368748;
             int? initNumberOfInputs = 153584;
@@ -190,7 +190,7 @@ namespace BlockchainAnalysisToolTest
             };
 
 
-            // Read from Wallet
+            // Read from Transaction
 
             Assert.AreEqual(trans.Tid, initTid);
             Assert.AreEqual(trans.NumberOfInputs, initNumberOfInputs);
@@ -200,7 +200,7 @@ namespace BlockchainAnalysisToolTest
             Assert.AreEqual(trans.ToWallet, initToWallet);
 
 
-            // Update Wallet
+            // Update Transaction
 
             int newTid = 116798;
             int? newNumberOfInputs = 134;
@@ -224,7 +224,7 @@ namespace BlockchainAnalysisToolTest
             Assert.AreEqual(trans.ToWallet, newToWallet);
 
 
-            // Delete values
+            // Delete values in Transaction
 
             trans.NumberOfInputs = null;
             trans.NumberOfOutputs = null;
@@ -241,7 +241,7 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void InputTest()
         {
-            // Create new Wallet
+            // Create new Input
 
             string initAid = "vcistuy";
             int initTid = 16987;
@@ -255,14 +255,14 @@ namespace BlockchainAnalysisToolTest
             };
 
 
-            // Read from Wallet
+            // Read from Input
 
             Assert.AreEqual(initAid, input.Aid);
             Assert.AreEqual(initTid, input.Tid);
             Assert.AreEqual(initIndexIn, input.IndexIn);
 
 
-            // Update Wallet
+            // Update Input
 
             string newAid = "oxiuvycb";
             int newTid = 98744;
@@ -283,7 +283,7 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void OutputTest()
         {
-            // Create new Wallet
+            // Create new Output
 
             string initAid = "vcistuy";
             int initTid = 16987;
@@ -297,14 +297,14 @@ namespace BlockchainAnalysisToolTest
             };
 
 
-            // Read from Wallet
+            // Read from Output
 
             Assert.AreEqual(initAid, output.Aid);
             Assert.AreEqual(initTid, output.Tid);
             Assert.AreEqual(initIndexOut, output.IndexOut);
 
 
-            // Update Wallet
+            // Update Output
 
             string newAid = "oxiuvycb";
             int newTid = 98744;
