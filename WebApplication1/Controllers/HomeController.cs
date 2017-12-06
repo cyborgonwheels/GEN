@@ -69,14 +69,14 @@ namespace BlockchainCapstoneWebApp.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Thank you for your support!";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Please contact with questions and issues!";
 
             return View();
         }

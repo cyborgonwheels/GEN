@@ -18,18 +18,38 @@ namespace BlockchainAnalysisTool.Controllers
             _context = context;    
         }
 
-        // GET: Wallets
         public async Task<IActionResult> Index(String adrs)
         {
             ViewData["searchedAddress"] = adrs;
-            List<Addr> addList = _context.Addr.Where(x => x.Aid == adrs).ToList();
+            //List<Addr> addList = _context.Addr.Where(x => x.Aid == adrs).ToList();
 
-            List<int> widList = new List<int>();
-            foreach (Addr add in addList) {
-                widList.Add(add.ParentWallet);
+
+            List<int> widList = new List<int>(); // List of wallets to pull from database
+
+            // Add the one parent wallet (maybe make this one special, use data dict)
+            var address = _context.Addr.Single(x => x.Aid == adrs);
+            widList.Add(address.ParentWallet);
+
+            // Get all wallets sent to
+            var inTrans = _context.Trans.Where(t => t.FromWallet == address.ParentWallet).ToList();
+            foreach (var trans in inTrans)
+            {
+                widList.Add(trans.ToWallet);
             }
 
-            return View(await _context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync());
+            // Get all wallets received from
+            var outTrans = _context.Trans.Where(t => t.ToWallet == address.ParentWallet).ToList();
+            foreach (var trans in outTrans)
+            {
+                widList.Add(trans.FromWallet);
+            }
+            
+
+            var wallets = await _context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync();
+
+            wallets = wallets.OrderByDescending(w => w.Priority).ToList();
+
+            return View(wallets);
         }
 
         // GET: Wallets/Details/5
@@ -52,7 +72,7 @@ namespace BlockchainAnalysisTool.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(addList);
         }
 
