@@ -36,9 +36,9 @@ namespace BlockchainAnalysisTool.Controllers
             BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
 
             blockExplorer = new BlockExplorer();
-            var address = blockExplorer.GetBase58AddressAsync(adrs).Result;
-            double amountSent = double.Parse(address.TotalSent.ToString(), NumberStyles.Currency);
-            double amountReceived = double.Parse(address.TotalReceived.ToString(), NumberStyles.Currency);
+            var addressToAdd = blockExplorer.GetBase58AddressAsync(adrs).Result;
+            double amountSent = double.Parse(addressToAdd.TotalSent.ToString(), NumberStyles.Currency);
+            double amountReceived = double.Parse(addressToAdd.TotalReceived.ToString(), NumberStyles.Currency);
 
             _context.Addr.AddRange(
                 new Addr
