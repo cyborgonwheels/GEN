@@ -6,12 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlockchainAnalysisTool.Models;
+using Info.Blockchain.API.BlockExplorer;
+using Info.Blockchain.API.Client;
+using System.Globalization;
 
 namespace BlockchainAnalysisTool.Controllers
 {
     public class WalletsController : Controller
     {
         private readonly BlockchainContext _context;
+        private BlockExplorer blockExplorer;
 
         public WalletsController(BlockchainContext context)
         {
@@ -28,6 +32,26 @@ namespace BlockchainAnalysisTool.Controllers
             foreach (Addr add in addList) {
                 widList.Add(add.ParentWallet);
             }
+
+            BlockchainHttpClient client = new BlockchainHttpClient(apiCode: "48461d4b-9e26-43c0-bbe7-875075a6f751");
+
+            blockExplorer = new BlockExplorer();
+            var address = blockExplorer.GetBase58AddressAsync(adrs).Result;
+            double amountSent = double.Parse(address.TotalSent.ToString(), NumberStyles.Currency);
+            double amountReceived = double.Parse(address.TotalReceived.ToString(), NumberStyles.Currency);
+
+            _context.Addr.AddRange(
+                new Addr
+                {
+                    Aid = adrs,
+                    ParentWallet = 1,
+                    AmountSent = amountSent,
+                    AmountReceived = amountReceived,
+                    LastSentTo = "out",
+                    LastReceivedFrom = "in"
+                }
+            );
+            await _context.SaveChangesAsync();
 
             return View(await _context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync());
         }
