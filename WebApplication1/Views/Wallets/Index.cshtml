@@ -30,7 +30,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    //if (item.NumberOfTransactions < 5) {
+    //if (item.NumberOfAddresses != null) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfAddresses)

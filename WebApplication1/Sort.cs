@@ -26,10 +26,10 @@ namespace BlockchainAnalysisTool
 
         public static List<Wallet> getRelatedWallets(BlockchainContext context, String adrs)
         {
-            if (!isValidAddress(adrs))
+           /* if (!isValidAddress(adrs))
             {
                 return null;
-            }
+            }*/
 
             List<int> widList = new List<int>(); // List of wallets to pull from database
 
