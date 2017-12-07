@@ -20,7 +20,7 @@ namespace BlockchainCapstoneWebApp
 
             // We are going to use a List<WalletID>() to handle it for now. The plan is to switch to a database, probably next sprint.
 
-            List<Sort> search = new List<Sort>();
+            //List<Sort> search = new List<Sort>();
         
         }
     }

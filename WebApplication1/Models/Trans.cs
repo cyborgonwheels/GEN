@@ -9,7 +9,7 @@ namespace BlockchainAnalysisTool.Models
         public int? NumberOfInputs { get; set; }
         public int? NumberOfOutputs { get; set; }
         public double? AmountSent { get; set; }
-        public int? FromWallet { get; set; }
-        public int? ToWallet { get; set; }
+        public int FromWallet { get; set; }
+        public int ToWallet { get; set; }
     }
 }
