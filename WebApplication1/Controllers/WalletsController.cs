@@ -22,17 +22,12 @@ namespace BlockchainAnalysisTool.Controllers
             _context = context;    
         }
 
-        // GET: Wallets
         public async Task<IActionResult> Index(String adrs)
         {
             ViewData["searchedAddress"] = adrs;
-            List<Addr> addList = _context.Addr.Where(x => x.Aid == adrs).ToList();
 
-            List<int> widList = new List<int>();
-            foreach (Addr add in addList) {
-                widList.Add(add.ParentWallet);
-            }
-
+            return View(Sort.getRelatedWallets(_context, adrs));
+        }
 
             return View(await _context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync());
         }
@@ -40,11 +35,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             // Use data dictionary for wallet info, pass list of Addr to View()
 
             var wallet = await _context.Wallet
@@ -57,7 +47,7 @@ namespace BlockchainAnalysisTool.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(addList);
         }
 
@@ -86,11 +76,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var wallet = await _context.Wallet.SingleOrDefaultAsync(m => m.Wid == id);
             if (wallet == null)
             {
@@ -137,11 +122,6 @@ namespace BlockchainAnalysisTool.Controllers
         // GET: Wallets/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var wallet = await _context.Wallet
                 .SingleOrDefaultAsync(m => m.Wid == id);
             if (wallet == null)
