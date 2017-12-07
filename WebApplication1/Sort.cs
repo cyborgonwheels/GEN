@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
 using Info.Blockchain.API.BlockExplorer;
 using Info.Blockchain.API.Client;
 using Info.Blockchain.API.Models;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+
 using BlockchainAnalysisTool.Models;
 
 
@@ -19,33 +26,79 @@ namespace BlockchainAnalysisTool
 
         public static List<Wallet> getRelatedWallets(BlockchainContext context, String adrs)
         {
-            //List<int> widList = new List<int>(); // List of wallets to pull from database
+            if (!isValidAddress(adrs))
+            {
+                return null;
+            }
 
-            //// Add the one parent wallet (maybe make this one special, use data dict)
-            //var address = context.Addr.Single(x => x.Aid == adrs);
-            //widList.Add(address.ParentWallet);
+            List<int> widList = new List<int>(); // List of wallets to pull from database
 
-            //// Get all wallets sent to
-            //var inTrans = context.Trans.Where(t => t.FromWallet == address.ParentWallet).ToList();
-            //foreach (var trans in inTrans)
-            //{
-            //    widList.Add(trans.ToWallet);
-            //}
+            // Add the one parent wallet (maybe make this one special, use data dict)
+            var address = context.Addr.Single(x => x.Aid == adrs);
+            widList.Add(address.ParentWallet);
 
-            //// Get all wallets received from
-            //var outTrans = context.Trans.Where(t => t.ToWallet == address.ParentWallet).ToList();
-            //foreach (var trans in outTrans)
-            //{
-            //    widList.Add(trans.FromWallet);
-            //}
+            // Get all wallets sent to
+            var inTrans = context.Trans.Where(t => t.FromWallet == address.ParentWallet).ToList();
+            foreach (var trans in inTrans)
+            {
+                widList.Add(trans.ToWallet);
+            }
+
+            // Get all wallets received from
+            var outTrans = context.Trans.Where(t => t.ToWallet == address.ParentWallet).ToList();
+            foreach (var trans in outTrans)
+            {
+                widList.Add(trans.FromWallet);
+            }
 
 
-            //var wallets = await context.Wallet.Where(x => widList.Contains(x.Wid)).ToListAsync();
+            var wallets = context.Wallet.Where(x => widList.Contains(x.Wid)).ToList();
 
-            //wallets = wallets.OrderByDescending(w => w.Priority).ToList();
+            wallets = wallets.OrderByDescending(w => w.Priority).ToList();
 
-            //return wallets;
-            return null;
+            return wallets;
+        }
+
+
+
+        public static bool findAndCreateAddress(BlockchainContext context, String adrs)
+        {
+            if (!isValidAddress(adrs))
+            {
+                return false;
+            }
+
+            var isAddr = context.Addr.Find(adrs);
+            if (isAddr == null)
+            {
+                // Add to database
+
+            }
+            else
+            {
+                // get parent wallet and add transactions etc
+            }
+
+
+            return true;
+        }
+
+
+
+        public static bool isValidAddress(string adrs)
+        {
+            if (adrs.Length > 34 || adrs.Length < 25)
+            {
+                return false;
+            }
+
+            Regex regex = new Regex("^1[a-km-zA-HJ-NP-Z1-9]*$");
+            if (regex.IsMatch(adrs))
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

@@ -3,6 +3,9 @@ using BlockchainCapstoneWebApp;
 using BlockchainAnalysisTool;
 using System.Collections.Generic;
 using BlockchainAnalysisTool.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 
 namespace BlockchainAnalysisToolTest
 {
@@ -15,6 +18,10 @@ namespace BlockchainAnalysisToolTest
         [TestMethod]
         public void TestMethod1()
         {
+            //var x = new DbContextOptions<BlockchainContext>();
+            //var context = new BlockchainContext(x);
+            //var read = context.Wallet.SingleAsync(v => v.Wid == 1).Result.Balance;
+            //Console.WriteLine(read);
 
             //List<string> addressStrings = null;
             //Sort scumbag1 = new Sort(addressStrings);
@@ -285,9 +292,9 @@ namespace BlockchainAnalysisToolTest
         {
             // Create new Output
 
-            string initAid = "vcistuy";
-            int initTid = 16987;
-            int initIndexOut = 41658;
+            string initAid = "wbtmnre";
+            int initTid = 395487;
+            int initIndexOut = 8653;
 
             OutputId output = new OutputId
             {
@@ -306,9 +313,9 @@ namespace BlockchainAnalysisToolTest
 
             // Update Output
 
-            string newAid = "oxiuvycb";
-            int newTid = 98744;
-            int newIndexOut = 349;
+            string newAid = "xenvot";
+            int newTid = 7835;
+            int newIndexOut = 5924;
 
             output.Aid = newAid;
             output.Tid = newTid;
